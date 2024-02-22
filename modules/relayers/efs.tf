@@ -48,7 +48,8 @@ resource "aws_security_group" "efs" {
       data.aws_vpc.vpc.cidr_block,
     ]
   }
-    lifecycle {
+
+  lifecycle {
     create_before_destroy = true
   }
 
