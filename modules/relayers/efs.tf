@@ -48,6 +48,9 @@ resource "aws_security_group" "efs" {
       data.aws_vpc.vpc.cidr_block,
     ]
   }
+    lifecycle {
+    create_before_destroy = true
+  }
 
   tags = {
     Name    = "${var.project_name}-efs-${var.env_sufix}"
