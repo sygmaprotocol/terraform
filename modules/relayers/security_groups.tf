@@ -1,6 +1,6 @@
 ## ALB Security Group
 resource "aws_security_group" "lb" {
-  name        = "${var.project_name}-sg-alb-DEVNET"
+  name        = "${var.project_name}-sg-alb-${var.env_sufix}"
   description = "Relayer load balancer security group"
   vpc_id      = data.aws_vpc.vpc.id
 
@@ -55,8 +55,8 @@ resource "aws_security_group" "lb" {
 
 ## ECS Task Security Group
 resource "aws_security_group" "ecs_tasks" {
-  name        = "${var.project_name}-sg-task-DEVNET"
-  description = "Relayer Task definition security group DEVNET"
+  name        = "${var.project_name}-sg-task-${var.env_sufix}"
+  description = "Relayer Task definition security group"
   vpc_id      = data.aws_vpc.vpc.id
 
   ingress {

@@ -99,7 +99,7 @@ resource "aws_ecs_service" "main" {
 resource "aws_service_discovery_private_dns_namespace" "ecs-service-namespace" {
   for_each    = toset(var.relayers_name)
   name        = "${var.project_name}-${each.key}"
-  description = "Namespace for relayers in TESTNET env_sufixironment"
+  description = "Namespace for relayers"
   vpc         = data.aws_vpc.vpc.id
   tags = {
     "Env"     = "${var.env_sufix}"
