@@ -25,7 +25,7 @@ resource "aws_efs_mount_target" "main" {
 
 resource "aws_security_group" "efs" {
   name        = "${var.project_name}-efs-DEVNET"
-  description = "relayer for efs volume in Devnet env_sufixironment"
+  description = "relayer for efs volume in Devnet environment"
   vpc_id      = data.aws_vpc.vpc.id
 
   ingress {
