@@ -4,7 +4,7 @@ locals {
 
 resource "local_file" "dns" {
   for_each = local.lb_names
-  content  = data.aws_lb.main[each.key].dns_name
+  content  = aws_lb.main[each.key].dns_name
   filename = "${path.module}/dns/dns.${each.key}"
 }
 
