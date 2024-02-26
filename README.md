@@ -29,6 +29,7 @@ provider "aws" {
 
 
 #### Configure the main.tf
+```
 module "relayers" {
   source               = "git::https://github.com/sygmaprotocol/terraform.git//modules/relayers?ref=v1.0.1"
   vpc_name             = var.vpc_name
@@ -56,6 +57,7 @@ module "relayers" {
   deployment_minimum_healthy_percent = var.deployment_minimum_healthy_percent
   tg_unhealthy_threshold             = var.tg_unhealthy_threshold
 }
+```
 
 ### Script to retrieve the DNS names
 `outputs.tf`
