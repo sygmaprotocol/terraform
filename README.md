@@ -59,7 +59,7 @@ module "relayers" {
 }
 ```
 
-### Script to retrieve the DNS names
+### Configure Outputs.tf - Script to retrieve the DNS names
 `outputs.tf`
 ```
 data "aws_lb" "dns" {
@@ -78,7 +78,7 @@ output "dns_address" {
 ```
 
 ### VPC Configuration
-| Comment this for existing VPC
+|For creating new VPC
 ```
 module "vpc" {
     source              = "git::https://github.com/sygmaprotocol/terraform.git//modules/vpc?ref=v1.0.1"
@@ -93,7 +93,7 @@ module "vpc" {
 }
 ```
 
-### Variables COnfiguration
+### Variables Configuration
 This is where to set the values
 `varaibles.tf`
 ```
