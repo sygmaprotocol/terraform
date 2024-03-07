@@ -97,8 +97,7 @@ resource "aws_ecs_service" "main" {
 }
 
 resource "aws_service_discovery_private_dns_namespace" "ecs-service-namespace" {
-  for_each    = toset(var.relayers_name)
-  name        = "${var.project_name}-${each.key}"
+  name        = "${var.project_name}"
   description = "Namespace for relayers"
   vpc         = data.aws_vpc.vpc.id
   tags = {
@@ -111,7 +110,7 @@ resource "aws_service_discovery_service" "ecs-service-discovery" {
   name     = "${var.project_name}-${each.key}"
 
   dns_config {
-    namespace_id = aws_service_discovery_private_dns_namespace.ecs-service-namespace[each.key].id
+    namespace_id = aws_service_discovery_private_dns_namespace.ecs-service-namespace.id
 
     dns_records {
       ttl  = 10
