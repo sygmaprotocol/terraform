@@ -1,12 +1,12 @@
 # check for the ecs cluster if it exist
 data "aws_ecs_cluster" "cluster_exist" {
-  cluster_name = "relayer-${upper(var.env_sufix)}"
+  cluster_name = var.cluster_name
 }
 
 # Create the ECS cluster if it doesn't exist
 resource "aws_ecs_cluster" "main" {
   count = length(data.aws_ecs_cluster.cluster_exist.arn) == 0 ? 1 : 0
-  name  = "relayer-${upper(var.env_sufix)}"
+  name  = var.cluster_name
   configuration {
     execute_command_configuration {
       logging = "DEFAULT"
