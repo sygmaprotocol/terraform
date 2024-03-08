@@ -19,7 +19,7 @@ locals {
 }
 
 resource "aws_ecs_task_definition" "main" {
-  for_each                 = toset(var.relayers_name)
+  for_each                 = toset(var.nodes_name)
   network_mode             = "awsvpc"
   family                   = "${var.project_name}-${each.key}-container-${var.env_sufix}"
   requires_compatibilities = ["FARGATE"]
@@ -56,7 +56,7 @@ resource "aws_ecs_task_definition" "main" {
 }
 
 resource "aws_ecs_service" "main" {
-  for_each                           = toset(var.relayers_name)
+  for_each                           = toset(var.nodes_name)
   name                               = "${var.project_name}-${each.key}-service-${upper(var.env_sufix)}"
   cluster                            = length(data.aws_ecs_cluster.cluster_exist.arn) > 0 ? data.aws_ecs_cluster.cluster_exist.arn : local.aws_ecs_cluster_main
   desired_count                      = 1
@@ -106,7 +106,7 @@ resource "aws_service_discovery_private_dns_namespace" "ecs-service-namespace" {
   }
 }
 resource "aws_service_discovery_service" "ecs-service-discovery" {
-  for_each = toset(var.relayers_name)
+  for_each = toset(var.nodes_name)
   name     = "${var.project_name}-${each.key}"
 
   dns_config {
@@ -130,7 +130,7 @@ resource "aws_service_discovery_service" "ecs-service-discovery" {
 }
 
 resource "aws_appautoscaling_target" "ecs_target" {
-  for_each           = toset(var.relayers_name)
+  for_each           = toset(var.nodes_name)
   max_capacity       = var.app_max_capacity
   min_capacity       = 1
   resource_id        = "service/${length(data.aws_ecs_cluster.cluster_exist.arn) > 0 ? data.aws_ecs_cluster.cluster_exist.arn : local.aws_ecs_cluster_main}/${aws_ecs_service.main[each.key].name}"
@@ -139,7 +139,7 @@ resource "aws_appautoscaling_target" "ecs_target" {
 }
 
 resource "aws_appautoscaling_policy" "ecs_policy_memory" {
-  for_each           = toset(var.relayers_name)
+  for_each           = toset(var.nodes_name)
   name               = "memory-autoscaling"
   policy_type        = "TargetTrackingScaling"
   resource_id        = aws_appautoscaling_target.ecs_target[each.key].resource_id
@@ -155,7 +155,7 @@ resource "aws_appautoscaling_policy" "ecs_policy_memory" {
 }
 
 resource "aws_appautoscaling_policy" "ecs_policy_cpu" {
-  for_each           = toset(var.relayers_name)
+  for_each           = toset(var.nodes_name)
   name               = "cpu-autoscaling"
   policy_type        = "TargetTrackingScaling"
   resource_id        = aws_appautoscaling_target.ecs_target[each.key].resource_id

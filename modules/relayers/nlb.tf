@@ -1,5 +1,5 @@
 resource "aws_lb" "main" {
-  for_each                         = toset(var.relayers_name)
+  for_each                         = toset(var.nodes_name)
   name                             = "${var.project_name}-${each.key}-lb-${var.env_sufix}"
   internal                         = var.is_lb_internal
   load_balancer_type               = "network"
@@ -12,7 +12,7 @@ resource "aws_lb" "main" {
 }
 
 resource "aws_lb_target_group" "http" {
-  for_each = toset(var.relayers_name)
+  for_each = toset(var.nodes_name)
   name     = "${var.project_name}-${each.key}-http"
   depends_on = [
     aws_lb.main
@@ -38,7 +38,7 @@ resource "aws_lb_target_group" "http" {
 }
 
 resource "aws_lb_target_group" "tcp" {
-  for_each = toset(var.relayers_name)
+  for_each = toset(var.nodes_name)
   name     = "${var.project_name}-${each.key}-tcp"
   depends_on = [
     aws_lb.main
@@ -66,7 +66,7 @@ resource "aws_lb_target_group" "tcp" {
 
 
 resource "aws_lb_listener" "http" {
-  for_each          = toset(var.relayers_name)
+  for_each          = toset(var.nodes_name)
   load_balancer_arn = aws_lb.main[each.key].id
   port              = 9001
   protocol          = "TCP"
@@ -78,7 +78,7 @@ resource "aws_lb_listener" "http" {
 }
 
 resource "aws_lb_listener" "tcp" {
-  for_each          = toset(var.relayers_name)
+  for_each          = toset(var.nodes_name)
   load_balancer_arn = aws_lb.main[each.key].id
   port              = var.internal_app_container_port
   protocol          = "TCP"
@@ -90,7 +90,7 @@ resource "aws_lb_listener" "tcp" {
 }
 
 resource "aws_lb_listener" "tls" {
-  for_each          = toset(var.relayers_name)
+  for_each          = toset(var.nodes_name)
   load_balancer_arn = aws_lb.main[each.key].id
   port              = "443"
   protocol          = "TLS"
