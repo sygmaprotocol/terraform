@@ -43,14 +43,14 @@ resource "aws_lb_target_group" "tcp" {
   depends_on = [
     aws_lb.main
   ]
-  port        = var.app_container_port
+  port        = var.internal_app_container_port
   protocol    = "TCP"
   vpc_id      = data.aws_vpc.vpc.id
   target_type = var.tg_target_type
 
   health_check {
     path                = "/health"
-    port                = 9001
+    port                = var.external_app_container_port
     protocol            = "HTTP"
     healthy_threshold   = var.tg_healthy_threshold
     unhealthy_threshold = var.tg_unhealthy_threshold
@@ -80,7 +80,7 @@ resource "aws_lb_listener" "http" {
 resource "aws_lb_listener" "tcp" {
   for_each          = toset(var.relayers_name)
   load_balancer_arn = aws_lb.main[each.key].id
-  port              = var.app_container_port
+  port              = var.internal_app_container_port
   protocol          = "TCP"
   ssl_policy        = ""
   default_action {

@@ -38,13 +38,13 @@ resource "aws_ecs_task_definition" "main" {
       portMappings = [
         {
           protocol      = "tcp"
-          containerPort = var.app_container_port
-          hostPort      = var.app_container_port
+          containerPort = var.internal_app_container_port
+          hostPort      = var.internal_app_container_port
         },
         {
           protocol      = "tcp"
-          containerPort = 9001
-          hostPort      = 9001
+          containerPort = var.external_app_container_port
+          hostPort      = var.external_app_container_port
         }
       ]
     }
@@ -81,7 +81,7 @@ resource "aws_ecs_service" "main" {
   load_balancer {
     target_group_arn = aws_lb_target_group.tcp[each.key].arn
     container_name   = "${var.project_name}-${each.key}-container-${upper(var.env_sufix)}"
-    container_port   = var.app_container_port
+    container_port   = var.internal_app_container_port
   }
 
   load_balancer {
@@ -97,7 +97,7 @@ resource "aws_ecs_service" "main" {
 }
 
 resource "aws_service_discovery_private_dns_namespace" "ecs-service-namespace" {
-  name        = "${var.project_name}"
+  name        = var.project_name
   description = "Namespace for relayers"
   vpc         = data.aws_vpc.vpc.id
   tags = {
