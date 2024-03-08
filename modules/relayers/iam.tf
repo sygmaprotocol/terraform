@@ -1,5 +1,5 @@
 resource "aws_iam_role" "ecs_task_role" {
-  for_each = toset(var.relayers_name)
+  for_each = toset(var.nodes_name)
   name     = "${var.project_name}-${each.key}-ecsTaskRole"
 
   assume_role_policy = <<EOF
@@ -25,7 +25,7 @@ EOF
 }
 
 resource "aws_iam_policy" "task_policy" {
-  for_each    = toset(var.relayers_name)
+  for_each    = toset(var.nodes_name)
   name        = "${var.project_name}-${each.key}-task-policy"
   path        = "/"
   description = "Task App policy"
@@ -62,7 +62,7 @@ resource "aws_iam_policy" "task_policy" {
 }
 
 resource "aws_iam_role_policy_attachment" "ecs-task-role-policy-attachment" {
-  for_each   = toset(var.relayers_name)
+  for_each   = toset(var.nodes_name)
   role       = aws_iam_role.ecs_task_role[each.key].name
   policy_arn = aws_iam_policy.task_policy[each.key].arn
 }
@@ -72,7 +72,7 @@ resource "aws_iam_role_policy_attachment" "ecs-task-role-policy-attachment" {
 ###
 
 resource "aws_iam_role" "ecs_task_execution_role" {
-  for_each = toset(var.relayers_name)
+  for_each = toset(var.nodes_name)
   name     = "${var.project_name}-${each.key}-ecsTaskExecutionRole"
 
   assume_role_policy = <<EOF
@@ -98,13 +98,13 @@ EOF
 }
 
 resource "aws_iam_role_policy_attachment" "ecs-task-execution-role-policy-attachment" {
-  for_each   = toset(var.relayers_name)
+  for_each   = toset(var.nodes_name)
   role       = aws_iam_role.ecs_task_execution_role[each.key].name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
 }
 
 resource "aws_iam_role_policy_attachment" "ecs-ssm-role-policy-attachment" {
-  for_each   = toset(var.relayers_name)
+  for_each   = toset(var.nodes_name)
   role       = aws_iam_role.ecs_task_execution_role[each.key].name
   policy_arn = aws_iam_policy.task_policy[each.key].arn
 }
