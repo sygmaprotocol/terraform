@@ -3,7 +3,8 @@ variable "vpc_name" {}
 variable "project_name" {}
 variable "env_sufix" {}
 variable "vpc_env" {}
-variable "app_container_port" {}
+variable "internal_app_container_port" {}
+variable "external_app_container_port" {}
 variable "efs_port" {}
 variable "app_image" {}
 variable "relayers_name" {}

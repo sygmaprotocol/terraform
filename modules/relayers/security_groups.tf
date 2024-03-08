@@ -22,16 +22,16 @@ resource "aws_security_group" "lb" {
 
   ingress {
     protocol    = "tcp"
-    from_port   = var.app_container_port
-    to_port     = var.app_container_port
+    from_port   = var.internal_app_container_port
+    to_port     = var.internal_app_container_port
     cidr_blocks = ["0.0.0.0/0"]
 
   }
 
   ingress {
     protocol    = "tcp"
-    from_port   = 9001
-    to_port     = 9001
+    from_port   = var.external_app_container_port
+    to_port     = var.external_app_container_port
     cidr_blocks = ["0.0.0.0/0"]
   }
 
