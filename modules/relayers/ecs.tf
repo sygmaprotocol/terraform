@@ -87,7 +87,7 @@ resource "aws_ecs_service" "main" {
   load_balancer {
     target_group_arn = aws_lb_target_group.http[each.key].arn
     container_name   = "${var.project_name}-${each.key}-container-${upper(var.env_sufix)}"
-    container_port   = "9001"
+    container_port   = var.external_app_container_port
   }
 
   lifecycle {
