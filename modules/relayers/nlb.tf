@@ -17,7 +17,7 @@ resource "aws_lb_target_group" "http" {
   depends_on = [
     aws_lb.main
   ]
-  port        = 9001
+  port        = var.external_app_container_port
   protocol    = "TCP"
   vpc_id      = data.aws_vpc.vpc.id
   target_type = var.tg_target_type
