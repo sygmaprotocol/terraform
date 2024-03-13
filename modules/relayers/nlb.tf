@@ -68,7 +68,7 @@ resource "aws_lb_target_group" "tcp" {
 resource "aws_lb_listener" "http" {
   for_each          = toset(var.nodes_name)
   load_balancer_arn = aws_lb.main[each.key].id
-  port              = 9001
+  port              = var.external_app_container_port
   protocol          = "TCP"
 
   default_action {
