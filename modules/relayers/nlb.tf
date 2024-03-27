@@ -3,6 +3,7 @@ resource "aws_lb" "main" {
   name                             = "${var.project_name}-${each.key}-lb-${var.env_sufix}"
   internal                         = var.is_lb_internal
   load_balancer_type               = "network"
+  security_groups                  = aws_security_group.lb
   subnets                          = data.aws_subnets.ec2_public_subnets.ids
   enable_cross_zone_load_balancing = false
   enable_deletion_protection       = var.lb_delete_protection
