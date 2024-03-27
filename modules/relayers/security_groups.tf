@@ -19,15 +19,6 @@ resource "aws_security_group" "lb" {
     cidr_blocks = ["0.0.0.0/0"]
 
   }
-
-  ingress {
-    protocol    = "tcp"
-    from_port   = var.internal_app_container_port
-    to_port     = var.internal_app_container_port
-    cidr_blocks = ["0.0.0.0/0"]
-
-  }
-
   ingress {
     protocol    = "tcp"
     from_port   = var.external_app_container_port
