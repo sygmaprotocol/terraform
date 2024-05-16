@@ -56,6 +56,7 @@ module "relayers" {
   log_retention_days                 = var.log_retention_days
   deployment_minimum_healthy_percent = var.deployment_minimum_healthy_percent
   tg_unhealthy_threshold             = var.tg_unhealthy_threshold
+  load_balancer_type                 = var.load_balancer_type
 }
 ```
 
@@ -130,6 +131,11 @@ variable "is_lb_internal" {
 variable "lb_delete_protection" {
   type    = bool
   default = false
+}
+
+variable "load_balancer_type {
+  type    = string
+  default = "network"
 }
 
 variable "tg_protocol" {
