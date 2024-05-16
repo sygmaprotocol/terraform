@@ -2,7 +2,7 @@ resource "aws_lb" "main" {
   for_each                         = toset(var.nodes_name)
   name                             = "${var.project_name}-${each.key}-lb-${var.env_sufix}"
   internal                         = var.is_lb_internal
-  load_balancer_type               = "network"
+  load_balancer_type               = var.load_balancer_type
   security_groups                  = [aws_security_group.lb.id]
   subnets                          = data.aws_subnets.ec2_public_subnets.ids
   enable_cross_zone_load_balancing = false

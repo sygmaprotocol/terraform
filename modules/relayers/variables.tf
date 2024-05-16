@@ -12,6 +12,7 @@ variable "certificate_domain" {}
 variable "tg_health_check_path" {}
 variable "tg_target_type" {}
 variable "cluster_name" {}
+variable "load_balancer_type" {}
 
 variable "is_lb_internal" {}
 variable "lb_delete_protection" {}
