@@ -6,7 +6,6 @@ variable "vpc_env" {}
 variable "app_container_port" {}
 variable "efs_port" {}
 variable "app_image" {}
-variable "nodes_name" {}
 variable "certificate_domain" {}
 variable "tg_health_check_path" {}
 variable "tg_target_type" {}
