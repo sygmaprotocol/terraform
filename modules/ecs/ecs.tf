@@ -17,7 +17,7 @@ resource "aws_ecs_task_definition" "main" {
   container_definitions = jsonencode([
     {
       name      = "${var.project_name}-container-${var.env_sufix}"
-      image     = "${var.app_image}:${var.env_sufix}"
+      image     = " "
       cpu       = var.app_cpu_usage
       memory    = var.app_memory_usage
       essential = true
