@@ -9,7 +9,7 @@ resource "aws_lb" "main" {
 }
 
 resource "aws_alb_target_group" "main" {
-  name_prefix = var.env_sufix
+  name = "${var.project_name}-${var.env_sufix}"
   port        = var.app_container_port
   protocol    = var.tg_protocol
   vpc_id      = data.aws_vpc.vpc.id
