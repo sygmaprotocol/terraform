@@ -31,7 +31,8 @@ resource "aws_iam_policy" "task_policy" {
           "ssm:GetParameter*",
           "ssm:DescribeParameters",
           "kms:Decrypt",
-          "ec2imds:Get*"
+          "ec2imds:Get*",
+          "secretsmanager:GetSecretValue"
         ]
         Effect   = "Allow"
         Resource = "*"
