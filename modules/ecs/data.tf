@@ -34,6 +34,6 @@ data "aws_acm_certificate" "chainsafe_io" {
   key_types = ["EC_secp384r1"]
 }
 
-data "aws_ecs_cluster" "sygma-explorer" {
+data "aws_ecs_cluster" "cluster_name" {
   cluster_name = var.cluster_name
 }

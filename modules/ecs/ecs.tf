@@ -1,5 +1,5 @@
 # resource "aws_ecs_cluster" "main" {
-#   name = data.aws_ecs_cluster.sygma-explorer
+#   name = data.aws_ecs_cluster.cluster_name
 #   tags = {
 #     Name = var.project_name
 #   }
@@ -37,7 +37,7 @@ resource "aws_ecs_task_definition" "main" {
 
 resource "aws_ecs_service" "main" {
   name                               = "${var.project_name}-service-${var.env_sufix}"
-  cluster                            = data.aws_ecs_cluster.sygma-explorer.arn
+  cluster                            = data.aws_ecs_cluster.cluster_name.arn
   desired_count                      = var.desired_count
   deployment_minimum_healthy_percent = var.deployment_minimum_healthy_percent
   deployment_maximum_percent         = var.deployment_maximum_healthy_percent
@@ -65,7 +65,7 @@ resource "aws_ecs_service" "main" {
 resource "aws_appautoscaling_target" "ecs_target" {
   max_capacity       = var.app_max_capacity
   min_capacity       = var.app_min_capacity
-  resource_id        = "service/${data.aws_ecs_cluster.sygma-explorer.arn}/${aws_ecs_service.main.name}"
+  resource_id        = "service/${data.aws_ecs_cluster.cluster_name.arn}/${aws_ecs_service.main.name}"
   scalable_dimension = "ecs:service:DesiredCount"
   service_namespace  = "ecs"
 }
