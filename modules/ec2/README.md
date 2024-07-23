@@ -1,5 +1,27 @@
 # EC2 Instance
 
+## Usage 
+
+```
+module "ec2" {
+  source                             = "git::https://github.com/sygmaprotocol/terraform.git//modules/ec2?ref=v1.0.16"
+  vpc                                = var.vpc
+  env                                = var.env
+  project_name                       = var.project_name
+  image_id                           = var.image_id
+  key_name                           = var.key_name
+  instance_profile                   = var.instance_profile
+  instance_type                      = var.instance_type
+  health_check_type                  = var.health_check_type
+  tg_target_type                     = var.tg_target_type
+  health_check_grace_period          = var.health_check_grace_period
+  app_max_capacity                   = var.app_max_capacity
+  app_min_capacity                   = var.app_min_capacity
+  app_desired_capacity               = var.app_desired_capacity
+}
+
+```
+
 ### The Following variables needs your input
 
 ```
@@ -27,6 +49,12 @@ variable "key_name" {
 variable "instance_type" {
   type    = string
   default = " " //change instance type
+}
+
+
+variable "region" {
+  type    = string
+  default = " "  // set the region
 }
 
 ```

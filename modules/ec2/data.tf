@@ -31,6 +31,3 @@ data "aws_subnets" "ec2_public_subnets" {
 data "aws_availability_zones" "availabile_zones" {
   state = "available"
 }
-
-
-
